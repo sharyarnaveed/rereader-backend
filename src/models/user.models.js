@@ -32,11 +32,6 @@ const User =sequelize.define('user',
             type:DataTypes.STRING,
             allowNull:false
         },
-
-        phone:{
-            type:DataTypes.STRING,
-            allowNull:false
-        },
         address:{
             type:DataTypes.STRING,
             allowNull:false
@@ -53,7 +48,11 @@ const User =sequelize.define('user',
             type:DataTypes.STRING,
             allowNull:false
         },
-
+status:{
+    type:DataTypes.STRING,
+    allowNull:false,
+    defaultValue:'notverified'
+}
      
     },
     {
