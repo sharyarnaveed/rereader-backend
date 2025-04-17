@@ -1,6 +1,8 @@
 const { app } = require("./src/app.js");
 const dotenv = require("dotenv");
 const { sequelize } = require("./src/database/conn.js");
+const port=3000||5000
+
 
 dotenv.config({
     path: './.env'
@@ -27,9 +29,9 @@ async function testConnection()
 testConnection()
 .then(()=>
 {
-    app.listen(3000,()=>
+    app.listen(port,()=>
     {
-        console.log('Server is running on port 3000');
+        console.log('Server is running on port',port);
 
     })
 })

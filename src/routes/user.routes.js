@@ -1,9 +1,11 @@
 const {Router}=require("express");
-const {test} = require("../controller/auth.controller");
+
+const { health } = require("../controller/healthcheck.controller");
 
 
 const router=Router();
 
-router.route("/test").post(test)
+
+router.route("/healthcheck").get(health)
 
 module.exports=router

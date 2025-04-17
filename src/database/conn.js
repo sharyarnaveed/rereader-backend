@@ -14,7 +14,6 @@ const sequelize = new Sequelize(
     logging: false,
   }
 );
-console.log(process.env.DATABASENAME);
 
 
 
