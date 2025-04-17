@@ -48,6 +48,10 @@ const User =sequelize.define('user',
             type:DataTypes.STRING,
             allowNull:false
         },
+        otp:{
+type:DataTypes.NUMBER,
+allowNull:false
+        },
 status:{
     type:DataTypes.STRING,
     allowNull:false,

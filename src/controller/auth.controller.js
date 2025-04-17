@@ -1,6 +1,7 @@
 const User = require("../models/user.models.js");
 const jwt =require("jsonwebtoken");
 const { generateNUmber } = require("../utility/generateopt.js");
+const { sendopt } = require("../services/sendOpt.js");
 
 
 const signup = async (req, res) => {
@@ -21,7 +22,8 @@ const signup = async (req, res) => {
     
 const hashedpassword=await jwt.sign(password, process.env.HASHEDPASSWORD)
 
-console.log(hashedpassword);
+const TheOpt=generateNUmber();
+console.log("otp",TheOpt);
 
 const save=await User.create({
   firstname,
@@ -33,18 +35,25 @@ const save=await User.create({
   city,
   state,
   zipcode:zip,
-
+otp:TheOpt
 })
 
-console.log(save);
+if (!save) {
+  return res.status(400).json({ message: "Failed to save user" });
+  
+}
 
-const id=generateNUmber();
-console.log("otp",id);
+
+const Sendmail=await sendopt(TheOpt, email);
+if(!Sendmail) {
+  return res.status(400).json({ message: "Failed to send OTP" });
+}
+console.log("otp sent successfully");
 res.json("successfully signed up")
 
 
   } catch (error) {
-    // console.log("error in sign up",error);
+    console.log("error in sign up",error);
     console.log(error.errors[0].message);
     
     res.json({

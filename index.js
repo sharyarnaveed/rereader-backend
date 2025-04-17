@@ -11,13 +11,20 @@ dotenv.config({
 async function testConnection()
 {
     try {
-        await sequelize.authenticate();
-        console.log("database connected");
-        sequelize.sync()
-.then(()=>console.log("Database synced")
-)
-.catch(()=>console.log("Database Not synced")
-)
+         sequelize.authenticate()
+         .then(async()=>
+        {
+            console.log("Database connected successfully");
+       await sequelize.sync()
+
+            .then(()=>console.log("Database synced")
+        )
+        .catch(()=>console.log("Database Not synced")
+        )
+        })
+        .catch((err)=>console.log(err,"error in db"))
+     
+
 
     } catch (error) {
         console.log("error connecting database",error);
