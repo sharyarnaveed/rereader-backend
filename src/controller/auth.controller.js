@@ -2,6 +2,7 @@ const User = require("../models/user.models.js");
 const jwt = require("jsonwebtoken");
 const { generateNUmber } = require("../utility/generateopt.js");
 const { sendopt } = require("../services/sendOpt.js");
+const { encrypt } = require("../utility/urlhashing.js");
 
 const signup = async (req, res) => {
   try {
@@ -17,13 +18,16 @@ const signup = async (req, res) => {
       password,
     } = req.body;
 
-    console.log(process.env.SECRET_KEY);
-
+    const emailExist = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (emailExist) {
+      return res.status(400).json({success:false ,message: "Email already exists" });
+    }
     const hashedpassword = await jwt.sign(password, process.env.HASHEDPASSWORD);
-
     const TheOpt = generateNUmber();
-    console.log("otp", TheOpt);
-
     const save = await User.create({
       firstname,
       lastname,
@@ -37,16 +41,25 @@ const signup = async (req, res) => {
       otp: TheOpt,
     });
 
+    
     if (!save) {
-      return res.status(400).json({ message: "Failed to save user" });
+      return res.status(400).json({ success:false,message: "Failed to save user" });
     }
 
     const Sendmail = await sendopt(TheOpt, email);
     if (!Sendmail) {
-      return res.status(400).json({ message: "Failed to send OTP" });
+      return res.status(400).json({ success:false,message: "Failed to send OTP" });
     }
-   
-    res.json("successfully signed up");
+
+const encrptedUrlId=await encrypt(save.id.toString())
+console.log(encrptedUrlId);
+
+
+    return res.json({
+      success: true,
+      message: "A verification mail has been sent to your email, please verify it",
+      data:encrptedUrlId
+    });
   } catch (error) {
     console.log("error in sign up", error);
     console.log(error.errors[0].message);
@@ -58,4 +71,32 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { signup };
+
+const signin=async(req,res)=>
+{
+  try {
+
+    const {email,password}=req.body;
+
+    const searchMail=await User.findOne({
+      where:{
+        email:email
+      }
+    })
+
+    console.log(searchMail);
+    
+
+
+
+  } catch (error) {
+    console.log("error in sign in",error);
+    return res.json({
+      success:false,
+      message:error
+    })
+    
+  }
+}
+
+module.exports = { signup , signin};

@@ -1,7 +1,7 @@
 const { app } = require("./src/app.js");
 const dotenv = require("dotenv");
 const { sequelize } = require("./src/database/conn.js");
-const port=3000||5000
+const port=3000
 
 
 dotenv.config({
