@@ -49,7 +49,7 @@ const User =sequelize.define('user',
             allowNull:false
         },
         otp:{
-type:DataTypes.NUMBER,
+type:DataTypes.STRING,
 allowNull:false
         },
 status:{

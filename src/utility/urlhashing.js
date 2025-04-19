@@ -16,13 +16,16 @@ const encrypt=(text)=>
 
 
 const decrypt=(text)=>
-{const iv = crypto.randomBytes(16); 
-    
-    const decipher= crypto.createDecipheriv("aes-256-cbc", Buffer.from(process.env.ENCRYPTION_KEY),iv);
-    let decryptedData = decipher.update(text.split(":")[1], "hex", "utf-8");
-    decryptedData += decipher.final("utf-8");
-    return decryptedData;
-}
+    {
+        const textParts = text.split(':');
+        const receivedIv = Buffer.from(textParts[0], 'hex');
+        const encryptedText = textParts[1];
+        
+        const decipher = crypto.createDecipheriv(algorithm, key, receivedIv);
+        let decryptedData = decipher.update(encryptedText, "hex", "utf-8");
+        decryptedData += decipher.final("utf-8");
+        return decryptedData;
+    }
 
 
 module.exports={encrypt,decrypt}
