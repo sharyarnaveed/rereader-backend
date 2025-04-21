@@ -2,7 +2,7 @@ const crypto=require("crypto")
 
 // encryption
 const algorithm = 'aes-256-cbc';
-const key = crypto.createHash('sha256').update(String("your-secret-passphrase")).digest(); // 32-byte key
+const key = crypto.createHash('sha256').update(String(process.env.URLENCODE)).digest(); // 32-byte key
 const iv = crypto.randomBytes(16);
 
 

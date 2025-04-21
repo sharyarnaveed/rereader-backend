@@ -1,17 +1,14 @@
-const generateUniqueid=require('generate-unique-id');
+const generateUniqueid = require("generate-unique-id");
 
+const generateNUmber = () => {
+  const id = generateUniqueid({
+    length: 4,
+    useLetters: false,
+    useNumbers: true,
+    useSymbols: false,
+  });
 
-const generateNUmber=()=>
-{
-    const id=generateUniqueid({
-        length:4,
-        useLetters:false,
-        useNumbers:true,
-        useSymbols:false,
+  return id;
+};
 
-    })
-
-    return id;
-}
-
-module.exports={generateNUmber}
+module.exports = { generateNUmber };

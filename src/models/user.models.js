@@ -56,6 +56,10 @@ status:{
     type:DataTypes.STRING,
     allowNull:false,
     defaultValue:'notverified'
+},
+refreshtoken:{
+    type:DataTypes.STRING,
+    allowNull:true
 }
      
     },

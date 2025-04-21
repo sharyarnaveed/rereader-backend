@@ -3,29 +3,23 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 
-
-
 dotenv.config({
-    path: './.env'
-  })
-const app=express()
+  path: "./.env",
+});
+const app = express();
 
 app.use(
-    cors({
-        origin: "*",
-        credentials:true
-    })
-)
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ limit: "100kb", extended: true }));
 app.use(cookieParser());
 
+const userroutes = require("./routes/user.routes.js");
+app.use("/api/user", userroutes);
 
-const userroutes=require('./routes/user.routes.js')
-app.use("/api/user",userroutes)
-
-
-
-
-module.exports = {app};
+module.exports = { app };
