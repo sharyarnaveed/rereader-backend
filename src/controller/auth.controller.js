@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const { generateNUmber } = require("../utility/generateopt.js");
 const { sendopt } = require("../services/sendOpt.js");
 const { encrypt } = require("../utility/urlhashing.js");
+const bcrypt = require("bcryptjs");
+const { generateToken } = require("../services/GenerateToken.js");
 
 const signup = async (req, res) => {
   try {
@@ -24,7 +26,9 @@ const signup = async (req, res) => {
       },
     });
     if (emailExist) {
-      return res.status(400).json({success:false ,message: "Email already exists" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Email already exists" });
     }
     const hashedpassword = await jwt.sign(password, process.env.HASHEDPASSWORD);
     const TheOpt = generateNUmber();
@@ -41,24 +45,27 @@ const signup = async (req, res) => {
       otp: TheOpt,
     });
 
-    
     if (!save) {
-      return res.status(400).json({ success:false,message: "Failed to save user" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to save user" });
     }
 
     const Sendmail = await sendopt(TheOpt, email);
     if (!Sendmail) {
-      return res.status(400).json({ success:false,message: "Failed to send OTP" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to send OTP" });
     }
 
-const encrptedUrlId=await encrypt(save.id.toString())
-console.log(encrptedUrlId);
-
+    const encrptedUrlId = await encrypt(save.id.toString());
+    console.log(encrptedUrlId);
 
     return res.json({
       success: true,
-      message: "A verification mail has been sent to your email, please verify it",
-      data:encrptedUrlId
+      message:
+        "A verification mail has been sent to your email, please verify it",
+      data: encrptedUrlId,
     });
   } catch (error) {
     console.log("error in sign up", error);
@@ -71,32 +78,60 @@ console.log(encrptedUrlId);
   }
 };
 
-
-const signin=async(req,res)=>
-{
+const signin = async (req, res) => {
   try {
+    const { email, password } = req.body;
 
-    const {email,password}=req.body;
+    const searchMail = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+    
+    if (!searchMail) {
+      return res.status(400).json({
+        success: false,
+        message: "Email not found",
+      });
+    }
 
-    const searchMail=await User.findOne({
-      where:{
-        email:email
+    try {
+      const decodedPassword = jwt.verify(searchMail.dataValues.password, process.env.HASHEDPASSWORD);
+      const isPasswordValid = decodedPassword === password || decodedPassword.data === password;
+      
+      if (isPasswordValid) {
+        const token = await generateToken(searchMail.dataValues.id);
+        
+        return res.json({
+          success: true,
+          message: "Signed in successfully",
+          token: token,
+          user: {
+            id: searchMail.dataValues.id,
+            email: searchMail.dataValues.email,
+            firstname: searchMail.dataValues.firstname,
+            lastname: searchMail.dataValues.lastname
+          }
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid password",
+        });
       }
-    })
-
-    console.log(searchMail);
-    
-
-
-
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid password",
+      });
+    }
   } catch (error) {
-    console.log("error in sign in",error);
-    return res.json({
-      success:false,
-      message:error
-    })
-    
+    console.log("error in sign in", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred during sign in",
+    });
   }
-}
+};
 
-module.exports = { signup , signin};
+module.exports = { signup, signin };

@@ -11,6 +11,6 @@ router.route("/healthcheck").get(health);
 router.route("/signup").post(signup);
 router.route("/signin").post(signin);
 router.route("/verifyotp").post(verificationOtp);
-router.route("/getuserinfo").get(userData)
+router.route("/getuserinfo").get(userData);
 
 module.exports = router;

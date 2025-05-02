@@ -29,7 +29,7 @@ const generateToken = async (id) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   };
 
-  // console.log(accessToken,refreshToken,"the tokens");
+  console.log(accessToken,refreshToken,"the tokens");
 
   return { accessToken, refreshToken, Accessoptions, Refreshoptions };
 };
