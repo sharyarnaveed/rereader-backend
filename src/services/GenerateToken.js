@@ -19,7 +19,7 @@ const generateToken = async (id) => {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: 1 * 60 * 1000, // 1 hour
+    maxAge: 2 * 60 * 60 * 1000, // 1 hour
   };
 
   const Refreshoptions = {
@@ -29,7 +29,7 @@ const generateToken = async (id) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   };
 
-  console.log(accessToken,refreshToken,"the tokens");
+  console.log(accessToken, refreshToken, "the tokens");
 
   return { accessToken, refreshToken, Accessoptions, Refreshoptions };
 };

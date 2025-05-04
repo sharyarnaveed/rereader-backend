@@ -30,9 +30,9 @@ const signup = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Email already exists" });
     }
-    const salt=await bcrypt.genSalt(12)
+    const salt = await bcrypt.genSalt(12);
 
-    const hashedpassword = await bcrypt.hash(password,salt);
+    const hashedpassword = await bcrypt.hash(password, salt);
     const TheOpt = generateNUmber();
     const save = await User.create({
       firstname,
@@ -89,7 +89,7 @@ const signin = async (req, res) => {
         email: email,
       },
     });
-    
+
     if (!searchMail) {
       return res.status(400).json({
         success: false,
@@ -98,20 +98,20 @@ const signin = async (req, res) => {
     }
 
     try {
-    
-      const isPasswordValid = await bcrypt.compare(password,searchMail.dataValues.password)
-      
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        searchMail.dataValues.password
+      );
+
       if (isPasswordValid) {
         const token = await generateToken(searchMail.dataValues.id);
         res
-        .cookie("accessToken", token.accessToken, token.Accessoptions)
-        .cookie("refreshToken", token.refreshToken, token.Refreshoptions);
+          .cookie("accessToken", token.accessToken, token.Accessoptions)
+          .cookie("refreshToken", token.refreshToken, token.Refreshoptions);
 
-        
         return res.json({
           success: true,
           message: "Signed in successfully",
-        
         });
       } else {
         return res.status(400).json({
