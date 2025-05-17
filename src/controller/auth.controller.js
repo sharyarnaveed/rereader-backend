@@ -134,4 +134,32 @@ const signin = async (req, res) => {
   }
 };
 
-module.exports = { signup, signin };
+const logout=async(req,res)=>
+{
+  try {
+    
+const options = {
+          httpOnly: true,
+          secure: true,
+        };
+    
+        res.clearCookie("accessToken", options);
+        res.clearCookie("refreshToken", options);
+        res.json({
+          message: "Logged out successfully",
+          success: true,
+        });
+
+
+
+  } catch (error) {
+    console.log("error in logout",error);
+res.json({
+  message:"error in logout",
+  success:false
+})    
+  }
+}
+
+
+module.exports = { signup, signin,logout };
