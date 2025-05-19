@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
+const helmet= require("helmet")
 
 dotenv.config({
   path: "./.env",
@@ -12,7 +13,10 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-  })
+  }),
+  helmet({
+    contentSecurityPolicy: false,
+  }),
 );
 
 app.use(express.json({ limit: "100kb" }));

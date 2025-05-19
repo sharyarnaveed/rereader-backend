@@ -8,15 +8,19 @@ const verifyjwt = async (req, res, next) => {
     const refreshToken = req.cookies?.refreshToken;
 
     if (!accessToken) {
-      if (!refreshToken) { // When don't have any access or refresh token
+      if (!refreshToken) {
+        // When don't have any access or refresh token
         return res.status(401).json({
           message: "Unauthorized, no tokens provided",
           success: false,
         });
-      }
-      else { // When have refresh token
+      } else {
+        // When have refresh token
         try {
-          const refreshData = jwt.verify(refreshToken, process.env.REFRESHTOKEN);
+          const refreshData = jwt.verify(
+            refreshToken,
+            process.env.REFRESHTOKEN
+          );
 
           const newAccessToken = jwt.sign(
             { id: refreshData.id },
@@ -41,8 +45,8 @@ const verifyjwt = async (req, res, next) => {
           });
         }
       }
-    }
-    else { // When have access token
+    } else {
+      // When have access token
       try {
         const decoded = jwt.verify(accessToken, process.env.ACCESSTOKEN);
         req.user = decoded;
@@ -54,7 +58,7 @@ const verifyjwt = async (req, res, next) => {
           req.cookies.accessToken = null;
           return verifyjwt(req, res, next);
         }
-        
+
         return res.status(401).json({
           message: "Invalid access token",
           success: false,

@@ -1,0 +1,1 @@
+Use Helmet.js in production apps to improve security, but customize it carefully to avoid breaking functionality.

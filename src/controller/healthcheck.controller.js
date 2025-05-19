@@ -8,8 +8,8 @@ const health = async (req, res) => {
 
 const checkacc = async (req, res) => {
   try {
-    console.log(req.user,"the user");
-    
+    console.log(req.user, "the user");
+
     return res.json({
       success: true,
     });
