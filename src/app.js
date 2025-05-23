@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const helmet= require("helmet")
+const passport=require("passport")
 
 dotenv.config({
   path: "./.env",
@@ -22,6 +23,8 @@ app.use(
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ limit: "100kb", extended: true }));
 app.use(cookieParser());
+app.use(passport.initialize())
+
 
 const userroutes = require("./routes/user.routes.js");
 app.use("/api/user", userroutes);
