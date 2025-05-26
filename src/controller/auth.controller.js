@@ -156,4 +156,58 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { signup, signin, logout };
+const forgotpassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    console.log(email);
+    const otp = generateNUmber();
+
+    console.log(otp);
+
+    const save = await User.update(
+      { otp: otp },
+      {
+        where: {
+          email: email,
+        },
+      }
+    );
+
+    console.log(save);
+
+    if (!save) {
+      return res.json({
+        message: "Failed To Generate OTP",
+        success: false,
+      });
+    } else {
+      await sendopt(otp, email);
+
+      const userdata=await User.findOne(
+        {
+          where:{
+            email:email
+          }
+        }
+      )
+
+const encrptedUrlId= await encrypt(userdata.dataValues.id.toString())
+
+
+      return res.json({
+        message: "Otp Sent Successfuly",
+        success: true,
+        data:encrptedUrlId
+      });
+    }
+  } catch (error) {
+    console.log("error in forgot password", error);
+    res.json({
+      message: "error in forgot password",
+      success: false,
+    });
+  }
+};
+
+module.exports = { signup, signin, logout, forgotpassword };

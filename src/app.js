@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const helmet= require("helmet")
 const passport=require("passport")
+const compression = require("compression");
 
 dotenv.config({
   path: "./.env",
@@ -19,6 +20,7 @@ app.use(
     contentSecurityPolicy: false,
   }),
 );
+app.use(compression());
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ limit: "100kb", extended: true }));
