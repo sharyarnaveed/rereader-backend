@@ -160,10 +160,7 @@ const forgotpassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    console.log(email);
     const otp = generateNUmber();
-
-    console.log(otp);
 
     const save = await User.update(
       { otp: otp },
@@ -174,8 +171,6 @@ const forgotpassword = async (req, res) => {
       }
     );
 
-    console.log(save);
-
     if (!save) {
       return res.json({
         message: "Failed To Generate OTP",
@@ -184,21 +179,18 @@ const forgotpassword = async (req, res) => {
     } else {
       await sendopt(otp, email);
 
-      const userdata=await User.findOne(
-        {
-          where:{
-            email:email
-          }
-        }
-      )
+      const userdata = await User.findOne({
+        where: {
+          email: email,
+        },
+      });
 
-const encrptedUrlId= await encrypt(userdata.dataValues.id.toString())
-
+      const encrptedUrlId = await encrypt(userdata.dataValues.id.toString());
 
       return res.json({
         message: "Otp Sent Successfuly",
         success: true,
-        data:encrptedUrlId
+        data: encrptedUrlId,
       });
     }
   } catch (error) {
