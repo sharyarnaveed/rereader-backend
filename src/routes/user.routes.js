@@ -7,6 +7,7 @@ const { userData } = require("../controller/userData.controller");
 const { verifyjwt } = require("../middlewares/VerifyToken");
 const passport = require("../services/passport");
 const { generateToken } = require("../services/GenerateToken");
+const { uploadProduct } = require("../controller/uploadproduct.controller");
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.route("/getuserinfo").get(userData);
 router.route("/checklogin").get(verifyjwt, checkacc);
 router.route("/logout").post(verifyjwt, logout);
 router.route("/resetmail").post(forgotpassword)
-
+router.route("/uploadporduct").post(uploadProduct)
 
 
 

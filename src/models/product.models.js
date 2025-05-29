@@ -7,13 +7,17 @@ const products = sequelize.define("product", {
     autoIncrement: true,
     primaryKey: true,
   },
+  userid:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
   producname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   price: {
     type: DataTypes.DOUBLE,
-    allowNull: false,
+    allowNull: true,
   },
   description: {
     type: DataTypes.STRING,
@@ -38,7 +42,7 @@ const products = sequelize.define("product", {
   image2: {
     type: DataTypes.STRING,
     allowNull: false,
-  },z
+  },
 },{
     timestamps:true,
     createdAt: 'created_at',
