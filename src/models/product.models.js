@@ -15,6 +15,10 @@ const products = sequelize.define("product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  saletype:{
+type:DataTypes.STRING,
+allowNull:false
+  },
   price: {
     type: DataTypes.DOUBLE,
     allowNull: true,
@@ -31,18 +35,14 @@ const products = sequelize.define("product", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
-  discount: {
-    type: DataTypes.DOUBLE,
-    allowNull: false,
-  },
-  image1: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  image2: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  // image1: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // },
+  // image2: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // },
 },{
     timestamps:true,
     createdAt: 'created_at',

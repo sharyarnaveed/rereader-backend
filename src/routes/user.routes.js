@@ -19,7 +19,7 @@ router.route("/getuserinfo").get(userData);
 router.route("/checklogin").get(verifyjwt, checkacc);
 router.route("/logout").post(verifyjwt, logout);
 router.route("/resetmail").post(forgotpassword)
-router.route("/uploadporduct").post(uploadProduct)
+router.route("/uploadporduct").post(verifyjwt,uploadProduct)
 
 
 
