@@ -119,4 +119,5 @@ dist
 
 ./node_modules
 ./env
+./public
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node

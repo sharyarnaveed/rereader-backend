@@ -8,6 +8,7 @@ const { verifyjwt } = require("../middlewares/VerifyToken");
 const passport = require("../services/passport");
 const { generateToken } = require("../services/GenerateToken");
 const { uploadProduct } = require("../controller/uploadproduct.controller");
+const { upload } = require("../middlewares/multer.middleware");
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.route("/getuserinfo").get(userData);
 router.route("/checklogin").get(verifyjwt, checkacc);
 router.route("/logout").post(verifyjwt, logout);
 router.route("/resetmail").post(forgotpassword)
-router.route("/uploadporduct").post(verifyjwt,uploadProduct)
+router.route("/uploadproduct").post(verifyjwt,upload.single('productImage'),uploadProduct)
 
 
 
