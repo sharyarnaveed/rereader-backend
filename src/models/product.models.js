@@ -40,6 +40,11 @@ allowNull:false
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status:{
+    type:DataTypes.STRING,
+    allowNull:false,
+    defaultValue:"unsold"
+  }
 
 },{
     timestamps:true,

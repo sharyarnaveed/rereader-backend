@@ -5,12 +5,14 @@ const dotenv = require("dotenv");
 const helmet= require("helmet")
 const passport=require("passport")
 const compression = require("compression");
+const path = require('path');
 
 dotenv.config({
   path: "./.env",
 });
 const app = express();
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use(
   cors({
     origin: true,
