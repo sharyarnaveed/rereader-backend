@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const products = require("../models/product.models");
 
 const Userproducts = async (req, res) => {
@@ -46,8 +47,6 @@ const updateStatus = async (req, res) => {
       }
     );
 
-    console.log(updateproduct);
-
     if (updateproduct) {
       return res.json({
         message: "Status Updated",
@@ -68,4 +67,38 @@ const updateStatus = async (req, res) => {
   }
 };
 
-module.exports = { Userproducts, updateStatus };
+const deleteProduct = async (req, res) => {
+  try {
+    const { productid } = req.params;
+    const userid = req.user.id;
+
+    console.log(productid, userid);
+
+    const deleteproduct = await products.destroy({
+      where: {
+        productid,
+        userid,
+      },
+    });
+
+    if (deleteProduct) {
+      return res.json({
+        message: "Product Deleted ",
+        success: true,
+      });
+    } else {
+      return res.json({
+        message: "Product Not Deleted ",
+        success: false,
+      });
+    }
+  } catch (error) {
+    console.log("error in deleting", error);
+    return res.json({
+      message: "error in deleting",
+      success: false,
+    });
+  }
+};
+
+module.exports = { Userproducts, updateStatus, deleteProduct };

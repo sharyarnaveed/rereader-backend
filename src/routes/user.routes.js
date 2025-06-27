@@ -9,7 +9,7 @@ const passport = require("../services/passport");
 const { generateToken } = require("../services/GenerateToken");
 const { uploadProduct } = require("../controller/uploadproduct.controller");
 const { upload } = require("../middlewares/multer.middleware");
-const { Userproducts, updateStatus } = require("../controller/products.controller");
+const { Userproducts, updateStatus, deleteProduct } = require("../controller/products.controller");
 
 const router = Router();
 
@@ -24,6 +24,8 @@ router.route("/resetmail").post(forgotpassword)
 router.route("/uploadproduct").post(verifyjwt,upload.single('productImage'),uploadProduct)
 router.route("/getproductsdetail").get(verifyjwt,Userproducts)
 router.route("/updatestatus/:productid").put(verifyjwt,updateStatus)
+router.route("/deleteproduct/:productid").delete(verifyjwt,deleteProduct)
+
 
 
 
