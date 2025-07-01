@@ -3,7 +3,7 @@ const { Router } = require("express");
 const { health, checkacc } = require("../controller/healthcheck.controller");
 const { signup, signin, logout, forgotpassword } = require("../controller/auth.controller");
 const { verificationOtp } = require("../controller/verify.controller");
-const { userData } = require("../controller/userData.controller");
+const { userData, updateUser } = require("../controller/userData.controller");
 const { verifyjwt } = require("../middlewares/VerifyToken");
 const passport = require("../services/passport");
 const { generateToken } = require("../services/GenerateToken");
@@ -17,7 +17,7 @@ router.route("/healthcheck").get(health);
 router.route("/signup").post(signup);
 router.route("/signin").post(signin);
 router.route("/verifyotp").post(verificationOtp);
-router.route("/getuserinfo").get(userData);
+router.route("/getuserinfo").get(verifyjwt,userData);
 router.route("/checklogin").get(verifyjwt, checkacc);
 router.route("/logout").post(verifyjwt, logout);
 router.route("/resetmail").post(forgotpassword)
@@ -25,7 +25,7 @@ router.route("/uploadproduct").post(verifyjwt,upload.single('productImage'),uplo
 router.route("/getproductsdetail").get(verifyjwt,Userproducts)
 router.route("/updatestatus/:productid").put(verifyjwt,updateStatus)
 router.route("/deleteproduct/:productid").delete(verifyjwt,deleteProduct)
-
+router.route("/updateprofile").put(verifyjwt,updateUser)
 
 
 
