@@ -12,7 +12,11 @@ dotenv.config({
 });
 const app = express();
 
-app.use(express.static(path.join(__dirname, "public")));
+// Serve static files from the public directory
+app.use('/public', express.static(path.join(__dirname, '../public')));
+// Alternative: serve images directly
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
+
 app.use(
   cors({
     origin: true,
@@ -28,7 +32,6 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize())
-
 
 const userroutes = require("./routes/user.routes.js");
 app.use("/api/user", userroutes);

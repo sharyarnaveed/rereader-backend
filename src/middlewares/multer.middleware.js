@@ -4,7 +4,7 @@ const {generateNUmber}=require("../utility/generateopt")
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./public");
+        cb(null, "./public/images");
     },
     filename: function (req, file, cb) {
    const uniqueid=generateNUmber()
