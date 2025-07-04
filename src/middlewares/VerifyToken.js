@@ -9,13 +9,13 @@ const verifyjwt = async (req, res, next) => {
 
     if (!accessToken) {
       if (!refreshToken) {
-        // When don't have any access or refresh token
+       
         return res.status(401).json({
           message: "Unauthorized, no tokens provided",
           success: false,
         });
       } else {
-        // When have refresh token
+      
         try {
           const refreshData = jwt.verify(
             refreshToken,

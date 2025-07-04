@@ -21,8 +21,8 @@ passport.use(
           provider: profile.provider,
         };
         // console.log(newUser);
- const salt = await bcrypt.genSalt(12);
-                    const hashedpassword = await bcrypt.hash(newUser.password, salt);
+        const salt = await bcrypt.genSalt(12);
+        const hashedpassword = await bcrypt.hash(newUser.password, salt);
         const userfound = await User.findOne({
           where: {
             email: newUser.email,
@@ -30,22 +30,21 @@ passport.use(
         });
 
         if (userfound) {
-            done(null, userfound);   
+          done(null, userfound);
         } else {
           try {
-                       
-       const user = await User.create({
+            const user = await User.create({
               firstname: newUser.firstName,
               lastname: newUser.lastName,
               email: newUser.email,
               password: hashedpassword,
-              status:'verified'
+              status: "verified",
             });
 
             done(null, user);
           } catch (error) {
             console.log(error, "error in creating user");
-          } 
+          }
         }
       } catch (error) {
         done(error, null);
