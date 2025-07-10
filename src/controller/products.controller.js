@@ -1,5 +1,8 @@
+
+
 const { where } = require("sequelize");
 const products = require("../models/product.models");
+
 
 const Userproducts = async (req, res) => {
   const userid = req.user.id;
@@ -101,4 +104,28 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { Userproducts, updateStatus, deleteProduct };
+
+const getallprodcts=async(req,res)=>
+{
+  try {
+    
+const product=await products.findAll({
+  raw:true
+},{
+  where:{
+    status:"unsold"
+  }
+})
+
+return res.json({
+  productdata:product,
+  success:true
+})
+
+  } catch (error) {
+    console.log("error in getting all products",error);
+
+    
+  }
+}
+module.exports = { Userproducts, updateStatus, deleteProduct,getallprodcts };

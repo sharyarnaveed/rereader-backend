@@ -79,4 +79,35 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { userData, updateUser };
+
+const getuserdata=async(req,res)=>
+{
+  try {
+    const  {userid}=req.params
+console.log(userid);
+
+    const data=await User.findOne({
+      raw:true,
+      where:{
+        id:userid
+      }
+    })
+
+    return res.json({
+      sellar:data,
+      message:"data rcieved",
+      success:true
+    })
+
+
+    
+  } catch (error) {
+    console.log("error in getting user data",error);
+    return res.json({
+      success:true,
+      message:"cannot get user data"
+    })
+    
+  }
+}
+module.exports = { userData, updateUser, getuserdata };

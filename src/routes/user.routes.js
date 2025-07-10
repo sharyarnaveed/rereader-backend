@@ -8,7 +8,7 @@ const {
   forgotpassword,
 } = require("../controller/auth.controller");
 const { verificationOtp } = require("../controller/verify.controller");
-const { userData, updateUser } = require("../controller/userData.controller");
+const { userData, updateUser, getuserdata } = require("../controller/userData.controller");
 const { verifyjwt } = require("../middlewares/VerifyToken");
 const passport = require("../services/passport");
 const { generateToken } = require("../services/GenerateToken");
@@ -18,6 +18,7 @@ const {
   Userproducts,
   updateStatus,
   deleteProduct,
+  getallprodcts,
 } = require("../controller/products.controller");
 
 const router = Router();
@@ -37,6 +38,8 @@ router.route("/getproductsdetail").get(verifyjwt, Userproducts);
 router.route("/updatestatus/:productid").put(verifyjwt, updateStatus);
 router.route("/deleteproduct/:productid").delete(verifyjwt, deleteProduct);
 router.route("/updateprofile").put(verifyjwt, updateUser);
+router.route("/allproducts").get(getallprodcts);
+router.route("/seller/:userid").get(verifyjwt,getuserdata);
 
 // GOOGLE AUTHENTICATION
 router
