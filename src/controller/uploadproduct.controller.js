@@ -2,8 +2,9 @@ const Products = require("../models/product.models");
 
 const uploadProduct = async (req, res) => {
   try {
-    const { producttitle, productdescription, saletype, category, price } =
+    const { producttitle, productdescription, saletype, category, price,city } =
       req.body;
+console.log(city);
 
     const image1 = req.file.path;
     const userid = req.user.id;
@@ -16,6 +17,7 @@ const uploadProduct = async (req, res) => {
       description: productdescription,
       category,
       image1,
+      city,
       isNew: true,
     });
 

@@ -37,7 +37,10 @@ const products = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     image1: {
       type: DataTypes.STRING,
       allowNull: false,

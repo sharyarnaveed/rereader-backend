@@ -6,18 +6,21 @@ const products = require("../models/product.models");
 
 const Userproducts = async (req, res) => {
   const userid = req.user.id;
+  console.log("the user id",userid);
+  
   try {
     const data = await products.findAll(
       {
         raw: true,
-      },
-      {
-        where: {
+          where: {
           userid: userid,
         },
-      }
+      },
+     
     );
 
+    console.log(data);
+    
     return res.json({
       success: true,
       Products: data,
@@ -110,9 +113,8 @@ const getallprodcts=async(req,res)=>
   try {
     
 const product=await products.findAll({
-  raw:true
-},{
-  where:{
+  raw:true,
+where:{
     status:"unsold"
   }
 })

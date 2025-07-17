@@ -20,6 +20,7 @@ const {
   deleteProduct,
   getallprodcts,
 } = require("../controller/products.controller");
+const { contactus } = require("../controller/contactus.controller");
 
 const router = Router();
 
@@ -40,6 +41,8 @@ router.route("/deleteproduct/:productid").delete(verifyjwt, deleteProduct);
 router.route("/updateprofile").put(verifyjwt, updateUser);
 router.route("/allproducts").get(getallprodcts);
 router.route("/seller/:userid").get(verifyjwt,getuserdata);
+router.route("/contactus").post(contactus);
+
 
 // GOOGLE AUTHENTICATION
 router
