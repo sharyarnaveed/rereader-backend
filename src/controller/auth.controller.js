@@ -2,7 +2,7 @@ const User = require("../models/user.models.js");
 const jwt = require("jsonwebtoken");
 const { generateNUmber } = require("../utility/generateopt.js");
 const { sendopt } = require("../services/sendOpt.js");
-const { encrypt } = require("../utility/urlhashing.js");
+const { encrypt, decrypt } = require("../utility/urlhashing.js");
 const bcrypt = require("bcryptjs");
 const { generateToken } = require("../services/GenerateToken.js");
 
@@ -202,4 +202,49 @@ const forgotpassword = async (req, res) => {
   }
 };
 
-module.exports = { signup, signin, logout, forgotpassword };
+const resetpassword = async (req, res) => {
+  try {
+    const { data, userid } = req.body;
+    const password = data.password;
+if(!userid)
+{
+  return res.json({
+    message:"Cannot update Password",
+    success:false
+  })
+}
+    const salt = await bcrypt.genSalt(12);
+    const hashedpassword = await bcrypt.hash(password, salt);
+    const decipher = await decrypt(userid);
+    const updatepassword = await User.update(
+      { password: hashedpassword },
+      {
+        where: {
+          id: decipher,
+        },
+      }
+    );
+if(updatepassword)
+{
+   return res.json({
+    message:"  Password Updated",
+    success:true
+  })
+}else{
+  return res.json({
+    message:"Cannot update Password",
+    success:false
+  })
+}
+
+
+  } catch (error) {
+    console.log("error in reset", error);
+    return res.json({
+    message:"Cannot update Password",
+    success:false
+  })
+  }
+};
+
+module.exports = { signup, signin, logout, forgotpassword, resetpassword };

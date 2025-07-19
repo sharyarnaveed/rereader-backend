@@ -6,6 +6,7 @@ const {
   signin,
   logout,
   forgotpassword,
+  resetpassword,
 } = require("../controller/auth.controller");
 const { verificationOtp } = require("../controller/verify.controller");
 const { userData, updateUser, getuserdata } = require("../controller/userData.controller");
@@ -21,6 +22,7 @@ const {
   getallprodcts,
 } = require("../controller/products.controller");
 const { contactus } = require("../controller/contactus.controller");
+const { saveReport } = require("../controller/report.controller");
 
 const router = Router();
 
@@ -42,6 +44,8 @@ router.route("/updateprofile").put(verifyjwt, updateUser);
 router.route("/allproducts").get(getallprodcts);
 router.route("/seller/:userid").get(verifyjwt,getuserdata);
 router.route("/contactus").post(contactus);
+router.route("/savereport").post(verifyjwt,saveReport)
+router.route("/resetpassword").post(resetpassword)
 
 
 // GOOGLE AUTHENTICATION
