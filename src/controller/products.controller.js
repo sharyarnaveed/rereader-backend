@@ -130,4 +130,29 @@ return res.json({
     
   }
 }
-module.exports = { Userproducts, updateStatus, deleteProduct,getallprodcts };
+
+
+const getproductdetail=async(req,res)=>
+{
+  try {
+    const {productid}=req.query
+console.log(productid);
+    
+const deatil= await products.findOne({
+  where:{
+    productid
+  },
+  raw:true
+})
+console.log(deatil);
+return res.json({
+  detail:deatil})
+
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+
+module.exports = { Userproducts, updateStatus, deleteProduct,getallprodcts,getproductdetail };

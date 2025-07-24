@@ -20,9 +20,11 @@ const {
   updateStatus,
   deleteProduct,
   getallprodcts,
+  getproductdetail,
 } = require("../controller/products.controller");
 const { contactus } = require("../controller/contactus.controller");
 const { saveReport } = require("../controller/report.controller");
+const { dashbaordcount } = require("../controller/dashboard.controller");
 
 const router = Router();
 
@@ -46,6 +48,8 @@ router.route("/seller/:userid").get(verifyjwt,getuserdata);
 router.route("/contactus").post(contactus);
 router.route("/savereport").post(verifyjwt,saveReport)
 router.route("/resetpassword").post(resetpassword)
+router.route("/dasboardcount").get(verifyjwt,dashbaordcount)
+router.route("/getproductdetails").get(getproductdetail)
 
 
 // GOOGLE AUTHENTICATION
