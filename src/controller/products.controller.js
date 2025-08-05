@@ -1,6 +1,6 @@
 
 
-const { where } = require("sequelize");
+const { where, literal } = require("sequelize");
 const products = require("../models/product.models");
 
 
@@ -154,5 +154,20 @@ return res.json({
   }
 }
 
-
-module.exports = { Userproducts, updateStatus, deleteProduct,getallprodcts,getproductdetail };
+const homeproducts=async(req,res)=>{
+  try {
+    const product=await products.findAll({
+      raw:true,
+      limit:9,
+      order:literal('RAND()')
+    })
+    return res.json({
+      products:product
+    })
+    
+  } catch (error) {
+    console.log("error in getting home products",error);
+    
+  }
+}
+module.exports = { Userproducts, updateStatus, deleteProduct,getallprodcts,getproductdetail,homeproducts };

@@ -21,6 +21,7 @@ const {
   deleteProduct,
   getallprodcts,
   getproductdetail,
+  homeproducts,
 } = require("../controller/products.controller");
 const { contactus } = require("../controller/contactus.controller");
 const { saveReport } = require("../controller/report.controller");
@@ -50,7 +51,7 @@ router.route("/savereport").post(verifyjwt,saveReport)
 router.route("/resetpassword").post(resetpassword)
 router.route("/dasboardcount").get(verifyjwt,dashbaordcount)
 router.route("/getproductdetails").get(getproductdetail)
-
+router.route("/gethomproducts").get(homeproducts)
 
 // GOOGLE AUTHENTICATION
 router
